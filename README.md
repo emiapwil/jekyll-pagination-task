@@ -105,7 +105,7 @@ pagination_filter:
   - `not_in`: *true* if `$ATTR` is not a member of `$PARAMETER` 
 
 It is notable that the types of `$ATTR` and `$PARAMETER` are also indicated in
-these relationships and I think they are enough for most cases. If the default
+these relationships and I think they can cover most cases. If the default
 filter still fail to meet the needs, you can always develop your own filter
 class and point to it by setting the `filter_class` option.
 
