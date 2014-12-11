@@ -52,11 +52,27 @@ module Jekyll
         true
       end
 
-      def satisfy?(post)
+      def check_is(parameters, attr)
+        parameters === attr
+      end
+
+      def check_is_not(parameters, attr)
+        parameters !== attr
+      end
+
+      def check_in(parameters, attr)
+        parameters.include?(attr)
+      end
+
+      def check_not_in(parameters, attr)
+        !parameters.include?(attr)
+      end
+
+      def satisfy?(page)
         @filters.each do |filter|
           relation = filter["relation"]
           parameters = filter["parameters"]
-          attr = post[filter["name"]]
+          attr = page[filter["name"]]
           checker = method("check_#{relation}")
           return false if !checker.call(parameters, attr)
         end
@@ -168,6 +184,7 @@ module Jekyll
       return nil if page_num.nil?
       format = pager['pagination_format']
       format = format || site.config['pagination_task']['format']
+      format = format || '/:dir/:name/:Num'
       dir = pager.dir
       name = File.basename(pager.name, File.extname(pager.name))
       format = format.sub(':dir', dir)
