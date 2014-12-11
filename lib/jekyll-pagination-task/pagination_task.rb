@@ -57,7 +57,7 @@ module Jekyll
       end
 
       def check_is_not(parameters, attr)
-        parameters !== attr
+        parameters != attr
       end
 
       def check_in(parameters, attr)
