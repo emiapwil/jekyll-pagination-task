@@ -133,7 +133,8 @@ Here is a quick introduction to the implementation of jekyll-pagination-task:
 - for each *tempalte*, construct the *filter* with *site* and the *template*
 - selects pages that satisfies the filter
 - create `PTPager`, which is derived from `Jekyll::Pager` and can set up the
-  correct url for generated pagination pages, before appending it to site.pages
+  correct url for generated pagination pages. Then the generated `pager` pages
+  are appended to site.pages
 
 # Features not Supported yet
 
