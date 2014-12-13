@@ -3,6 +3,19 @@ jekyll-pagination-task
 
 An advanced pagination tool for jekyll
 
+# Apology
+
+I must apologize to those who have downloaded `1.0.0` and `1.0.1` version of
+this plugin. I should have tested it in more complicated situations before
+publishing it.
+
+Also I'd like to apologize for the irresponsible pushes to [RubyGems][rubygem].
+I am new to Ruby and got overenthusiastic to have my own gem published.
+
+[rubygem]: http://rubygems.org/
+
+I really would like this plugin to be useful and hope every one enjoys it.
+
 # Installation
 
 First you must install jekyll-pagination-task. It can be done by 
