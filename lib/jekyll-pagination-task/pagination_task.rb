@@ -129,10 +129,10 @@ module Jekyll
 
       def create_pager(site, template, pager)
         instance = template.dup
-        instance.pager = pager
         instance.basename = "index"
-        instance.data['paginated'] = true
         instance.dir = PTPager.paginate_path(site, template, pager.page)
+        instance.pager = pager
+        instance.data['paginated'] = true
 
         instance
       end
@@ -190,7 +190,7 @@ module Jekyll
       format = pager['pagination_format']
       format = format || site.config['pagination_task']['format']
       format = format || '/:dir/:name/:Num'
-      dir = pager.dir
+      dir = remove_leading_slash(pager.dup.dir)
       name = File.basename(pager.name, File.extname(pager.name))
       format = format.sub(':dir', dir)
       format = format.sub(':name', name)
@@ -216,7 +216,7 @@ module Jekyll
 
       @posts = all_posts[init..offset]
 
-      @previous_path = PTPager.paginate_path(site, pager, @previous_page)
+      @previous_page_path = PTPager.paginate_path(site, pager, @previous_page)
       @next_page_path = PTPager.paginate_path(site, pager, @next_page)
     end
   end
