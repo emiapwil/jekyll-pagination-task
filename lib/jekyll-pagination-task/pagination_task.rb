@@ -143,7 +143,12 @@ module Jekyll
       # template - The pager template that defines a pagination.
       #
       def paginate(site, template)
-        all_pages = site.pages.select{ | page | !page['paginated'] }
+        post_only = site.config['pagination_task']['post_only'].to_s || 'true'.to_s
+        all_pages = []
+        if !YAML.load(post_only)
+          all_pages += site.pages.select{ | page | !page['paginated'] }
+        end
+        all_pages += site.posts
         filter = get_filter(site, template)
         
         if filter.nil?
@@ -158,7 +163,7 @@ module Jekyll
 
         npages = Paginate::Pager.calculate_pages(all_pages, page_per_pager.to_i)
         (1..npages).each do |num_page|
-          pager = PTPager.new(site, template, num_page, all_pages, npages)
+          pager = PTPager.new(site, template, num_page, all_pages, page_per_pager.to_i)
           site.pages << create_pager(site, template, pager)
         end
       end
@@ -202,8 +207,15 @@ module Jekyll
     # all_posts - The Array of all the site's Posts.
     # num_pages - The Integer number of pages or nil if you'd like the number
     #             of pages calculated.
-    def initialize(site, pager, current, all_posts, num_pages = nil)
-      super(site, current, all_posts, num_pages)
+    def initialize(site, pager, current, all_posts, per_page)
+      super(site, current, all_posts, Paginate::Pager.calculate_pages(all_posts, per_page))
+
+      @per_page = per_page
+      init = (@page - 1) * @per_page
+      offset = (init + @per_page - 1) >= all_posts.size ? all_posts.size : (init + @per_page - 1)
+
+      @posts = all_posts[init..offset]
+
       @previous_path = PTPager.paginate_path(site, pager, @previous_page)
       @next_page_path = PTPager.paginate_path(site, pager, @next_page)
     end
