@@ -5,7 +5,7 @@ An advanced pagination tool for jekyll
 
 # Apology
 
-I must apologize to those who have downloaded `1.0.0` and `1.0.1` version of
+I must apologize to those who have downloaded `1.0.0` to `1.0.2` version of
 this plugin. I should have tested it in more complicated situations before
 publishing it.
 
