@@ -14,7 +14,7 @@ I am new to Ruby and got overenthusiastic to have my own gem published.
 
 [rubygem]: http://rubygems.org/
 
-I really would like this plugin to be useful and hope every one enjoys it.
+I really would like this plugin to be useful and hope everyone enjoys it.
 
 # Installation
 
