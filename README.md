@@ -43,6 +43,7 @@ pagination_task:
   page_per_pager: 7
   format: /:dir/:name/:Num
   filter_class: Jekyll::PaginationTask::DefaultPaginationFilter
+  post_only: true
 ~~~
 
 The first line is crucial since it indicates that jekyll-pagination-task plugin
@@ -58,6 +59,8 @@ will be enabled. The other three lines are all optional:
   - `:Num`: same as `:num` expect that 1 is replaced by an empty string.
 - `filter_class`: which class to use as the filter for pages. The default value
   is Jekyll::PaginationTask::DefaultPaginationFilter.
+- `post_only`: only paginate the posts, the default value is `true`. If set to
+  `false`, the pages will be paginated as well.
 
 ## Page Configuration
 
@@ -106,7 +109,7 @@ pagination_filter:
 
 It is notable that the types of `$ATTR` and `$PARAMETER` are also indicated in
 these relationships and I think they can cover most cases. If the default
-filter still fail to meet the needs, you can always develop your own filter
+filter still fails to meet the needs, you can always develop your own filter
 class and point to it by setting the `filter_class` option.
 
 # Demonstration
@@ -146,3 +149,17 @@ Here is a quick introduction to the implementation of jekyll-pagination-task:
 
 I'm new to Ruby and this package is not fully tested, so there might be many
 bugs...
+
+## Known Bugs
+
+### **Unable to generate correct pages when the `url` function of the template has been called earlier**.
+  
+The reason is that Jekyll::Page will generate the url once `url` is called and
+store it in `@url` which is not accessible thus not modifiable. One workaround
+is to hack the Jekyll package and add the `:url` to `attr_accesssor` in
+`Jekyll::Page` and then add one more line in `create_pager` just before it
+returns:
+
+~~~
+instance.url = nil # reset the url
+~~~
