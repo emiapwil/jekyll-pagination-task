@@ -143,9 +143,10 @@ module Jekyll
       # template - The pager template that defines a pagination.
       #
       def paginate(site, template)
-        post_only = site.config['pagination_task']['post_only'].to_s || 'true'.to_s
+        post_only = site.config['pagination_task']['post_only'] || true
         all_pages = []
-        if !YAML.load(post_only)
+        if !YAML.load(post_only.to_s)
+          Jekyll.logger.info 'here'
           all_pages += site.pages.select{ | page | !page['paginated'] }
         end
         all_pages += site.posts
