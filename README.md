@@ -153,7 +153,7 @@ bugs...
 ## Known Bugs
 
 ### **Unable to generate correct pages when the `url` function of the template has been called earlier**.
-  
+ 
 The reason is that Jekyll::Page will generate the url once `url` is called and
 store it in `@url` which is not accessible thus not modifiable. One workaround
 is to hack the Jekyll package and add the `:url` to `attr_accesssor` in
@@ -163,3 +163,8 @@ returns:
 ~~~
 instance.url = nil # reset the url
 ~~~
+
+**Update**: the hack is not necessary now since most plugins are unlikely to
+touch these template files and the problem occurred earlier is caused by a call
+to `dir` in calculating the pagination path within this plugin. It is fixed in
+a recent commit.
